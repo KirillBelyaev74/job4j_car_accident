@@ -5,6 +5,9 @@
     <title>Accident</title>
 </head>
 <body>
-Hello : Accident
+<p><c:forEach items="${messages}" var="message">
+    <c:out value="${message}"/>
+</c:forEach></p>
+<p>Hello : Accident</p>
 </body>
 </html>
