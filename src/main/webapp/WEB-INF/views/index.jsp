@@ -37,7 +37,7 @@
                 <td>${accident.name}</td>
                 <td>${accident.text}</td>
                 <td>${accident.address}</td>
-                <td><input type="button" onclick="location.href='<c:url value='/edit?id=${accident.id}'/>'"
+                <td><input type="button" onclick="location.href='<c:url value='/update?id=${accident.id}'/>'"
                            class="btn btn-dark" value="Редактировать"></td>
             </tr>
         </c:forEach>

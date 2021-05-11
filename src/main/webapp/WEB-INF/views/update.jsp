@@ -16,21 +16,21 @@
 
     <title>Редактирование инцидента</title>
 </head>
-<c:set var="acc" value="${accident}" />
+<c:set var="result" value="${accident}" />
 <body>
 <div class="container">
-    <form action="<c:url value='/saveEdit?id=${acc.id}'/>" method='POST'>
+    <form action="<c:url value='/save?id=${result.id}'/>" method='POST'>
         <div class="form-group">
             <label for="name">Имя </label>
-            <input type="text" class="form-control" id="name" name="name" value="${acc.name}">
+            <input type="text" class="form-control" id="name" name="name" value="${result.name}">
         </div>
         <div class="form-group">
             <label for="text">Описание </label>
-            <input type="text" class="form-control" id="text" name="text" value="${acc.text}">
+            <input type="text" class="form-control" id="text" name="text" value="${result.text}">
         </div>
         <div class="form-group">
             <label for="address">Адрес</label>
-            <input type="text" class="form-control" id="address" name="address" value="${acc.address}">
+            <input type="text" class="form-control" id="address" name="address" value="${result.address}">
         </div>
         <button type="submit" class="btn btn-dark">Добавить</button>
     </form>

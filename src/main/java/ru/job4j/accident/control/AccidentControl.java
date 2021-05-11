@@ -5,10 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.repository.AccidentMemory;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AccidentControl {
@@ -26,21 +25,14 @@ public class AccidentControl {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident) {
-        accidentMemory.add(accident);
+        accidentMemory.addOrReplace(accident);
         return "redirect:/";
     }
 
-    @GetMapping("/edit")
-    public String edit(HttpServletRequest request, Model model) {
-        int id = Integer.parseInt(request.getParameter("id"));
+    @GetMapping("/update")
+    public String edit(@RequestParam int id, Model model) {
         Accident accident = accidentMemory.getId(id);
         model.addAttribute("accident", accident);
-        return "/edit";
-    }
-
-    @PostMapping("/saveEdit")
-    public String saveEdit(@ModelAttribute Accident accident) {
-        accidentMemory.replace(accident);
-        return "redirect:/";
+        return "/update";
     }
 }

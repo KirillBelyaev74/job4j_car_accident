@@ -14,9 +14,13 @@ public class AccidentMemory {
     private final Map<Integer, Accident> accidents = new HashMap<>();
     private AtomicInteger index = new AtomicInteger(0);
 
-    public Accident add(Accident accident) {
-        accident.setId(index.incrementAndGet());
-        accidents.putIfAbsent(accident.getId(), accident);
+    public Accident addOrReplace(Accident accident) {
+        if (accident.getId() == 0) {
+            accident.setId(index.incrementAndGet());
+            accidents.putIfAbsent(accident.getId(), accident);
+        } else {
+            accidents.replace(accident.getId(), accident);
+        }
         return accident;
     }
 
@@ -26,9 +30,5 @@ public class AccidentMemory {
 
     public Accident getId(int id) {
         return accidents.get(id);
-    }
-
-    public void replace(Accident accident) {
-        accidents.replace(accident.getId(), accident);
     }
 }
