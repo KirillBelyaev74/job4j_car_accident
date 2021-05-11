@@ -20,12 +20,15 @@
 </head>
 <body>
 <div class="container">
+    <br/><input type="button" onclick="location.href='<c:url value='/create'/>'"
+                     class="btn btn-dark" value="Добавить"><br/><br/>
     <table class="table">
         <thead class="thead-dark">
         <tr>
             <th scope="col">Имя</th>
             <th scope="col">Описание</th>
             <th scope="col">Адресс</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -34,6 +37,8 @@
                 <td>${accident.name}</td>
                 <td>${accident.text}</td>
                 <td>${accident.address}</td>
+                <td><input type="button" onclick="location.href='<c:url value='/edit?id=${accident.id}'/>'"
+                           class="btn btn-dark" value="Редактировать"></td>
             </tr>
         </c:forEach>
         </tbody>
