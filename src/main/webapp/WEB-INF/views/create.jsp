@@ -32,10 +32,18 @@
             <input type="text" class="form-control" id="address" name="address">
         </div>
         <div class="form-group">
-            <label for="address">Тип</label>
+            <label for="address">Тип</label><br/>
             <select name="accidentsType">
                 <c:forEach items="${accidentsType}" var="accidentType">
                     <option value="${accidentType.id}">${accidentType.name}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="address">Роль</label><br/>
+            <select name="rules" multiple>
+                <c:forEach items="${rules}" var="rule">
+                    <option value="${rule.id}">${rule.name}</option>
                 </c:forEach>
             </select>
         </div>

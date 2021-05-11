@@ -3,10 +3,9 @@ package ru.job4j.accident.repository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
@@ -14,6 +13,7 @@ public class AccidentMemory {
 
     private final Map<Integer, Accident> accidents = new HashMap<>();
     private final Map<Integer, AccidentType> accidentsType = new HashMap<>();
+    private final Map<Integer, Rule> rules = new HashMap<>();
     private AtomicInteger index = new AtomicInteger(0);
 
     public Accident addOrReplace(Accident accident) {
@@ -49,5 +49,24 @@ public class AccidentMemory {
 
     public AccidentType getAccidentTypeId(int id) {
         return accidentsType.get(id);
+    }
+
+    public Collection<Rule> getAllRules() {
+        Rule one = new Rule("Статья №1");
+        one.setId(1);
+        Rule two = new Rule("Статья №2");
+        two.setId(2);
+        Rule three = new Rule("Статья №3");
+        three.setId(3);
+        rules.put(one.getId(), one);
+        rules.put(two.getId(), two);
+        rules.put(three.getId(), three);
+        return rules.values();
+    }
+
+    public Set<Rule> getRulesId(String[] id) {
+        Set<Rule> rule = new HashSet<>();
+        Arrays.stream(id).forEach(i -> rule.add(rules.get(Integer.parseInt(i))));
+        return rule;
     }
 }

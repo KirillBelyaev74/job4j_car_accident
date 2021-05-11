@@ -16,7 +16,7 @@
 
     <title>Редактирование инцидента</title>
 </head>
-<c:set var="result" value="${accident}" />
+<c:set var="result" value="${accident}"/>
 <body>
 <div class="container">
     <form action="<c:url value='/save?id=${result.id}'/>" method='POST'>
@@ -33,7 +33,7 @@
             <input type="text" class="form-control" id="address" name="address" value="${result.address}">
         </div>
         <div class="form-group">
-            <label for="address">Тип</label>
+            <label>Тип</label><br/>
             <select name="accidentsType">
                 <c:forEach items="${accidentsType}" var="accidentType">
                     <c:if test="${accidentType.id == result.accidentType.id}">
@@ -42,6 +42,14 @@
                     <c:if test="${accidentType.id != result.accidentType.id}">
                         <option value="${accidentType.id}">${accidentType.name}</option>
                     </c:if>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Роль</label><br/>
+            <select name="rules" multiple>
+                <c:forEach items="${rules}" var="rule">
+                    <option selected value="${rule.id}">${rule.name}</option>
                 </c:forEach>
             </select>
         </div>
