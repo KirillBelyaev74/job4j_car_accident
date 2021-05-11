@@ -32,6 +32,19 @@
             <label for="address">Адрес</label>
             <input type="text" class="form-control" id="address" name="address" value="${result.address}">
         </div>
+        <div class="form-group">
+            <label for="address">Тип</label>
+            <select name="accidentsType">
+                <c:forEach items="${accidentsType}" var="accidentType">
+                    <c:if test="${accidentType.id == result.accidentType.id}">
+                        <option selected value="${accidentType.id}">${accidentType.name}</option>
+                    </c:if>
+                    <c:if test="${accidentType.id != result.accidentType.id}">
+                        <option value="${accidentType.id}">${accidentType.name}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+        </div>
         <button type="submit" class="btn btn-dark">Добавить</button>
     </form>
 </div>

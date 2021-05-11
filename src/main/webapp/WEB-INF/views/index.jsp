@@ -27,7 +27,8 @@
         <tr>
             <th scope="col">Имя</th>
             <th scope="col">Описание</th>
-            <th scope="col">Адресс</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Тип</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -37,6 +38,7 @@
                 <td>${accident.name}</td>
                 <td>${accident.text}</td>
                 <td>${accident.address}</td>
+                <td>${accident.accidentType.name}</td>
                 <td><input type="button" onclick="location.href='<c:url value='/update?id=${accident.id}'/>'"
                            class="btn btn-dark" value="Редактировать"></td>
             </tr>
