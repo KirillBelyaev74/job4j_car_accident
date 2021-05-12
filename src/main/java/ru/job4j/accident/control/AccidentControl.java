@@ -1,5 +1,6 @@
 package ru.job4j.accident.control;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,17 +10,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 import ru.job4j.accident.repository.AccidentMemory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Controller
 public class AccidentControl {
 
-    private final AccidentMemory accidentMemory;
+    private final AccidentJdbcTemplate accidentMemory;
 
-    public AccidentControl(AccidentMemory accidents) {
+    @Autowired
+    public AccidentControl(AccidentJdbcTemplate accidents) {
         this.accidentMemory = accidents;
     }
 
@@ -36,7 +42,8 @@ public class AccidentControl {
         String[] rulesId = request.getParameterValues("rules");
 
         AccidentType accidentType = accidentMemory.getAccidentTypeId(accidentTypeId);
-        Set<Rule> rules = accidentMemory.getRulesId(rulesId);
+        List<Rule> rules = new ArrayList<>();
+        Arrays.stream(rulesId).forEach(id -> rules.add(accidentMemory.getRulesId(Integer.parseInt(id))));
 
         accident.setAccidentType(accidentType);
         accident.setRules(rules);

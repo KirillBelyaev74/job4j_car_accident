@@ -1,5 +1,6 @@
 package ru.job4j.accident.model;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class Accident {
 
     private AccidentType accidentType;
 
-    private Set<Rule> rules;
+    private List<Rule> rules;
 
     public Accident(String name, String text, String address) {
         this.name = name;
@@ -63,11 +64,11 @@ public class Accident {
         this.accidentType = accidentType;
     }
 
-    public Set<Rule> getRules() {
+    public List<Rule> getRules() {
         return rules;
     }
 
-    public void setRules(Set<Rule> rules) {
+    public void setRules(List<Rule> rules) {
         this.rules = rules;
     }
 
