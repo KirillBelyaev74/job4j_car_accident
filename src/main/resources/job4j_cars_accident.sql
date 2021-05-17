@@ -19,9 +19,12 @@ CREATE TABLE accident
     text             text,
     address          text,
     id_accident_type int references accident_type (id),
-    id_rule          int references rule (id),
     constraint unta unique (name, text, address)
 );
+
+create table accident_rule(
+    id_accident int references accident(id),
+    id_rule int references rule(id));
 
 insert into accident_type(name) values ('Машина и велосипед');
 insert into accident_type(name) values ('Машина и пешеход');

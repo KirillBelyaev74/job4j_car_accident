@@ -10,29 +10,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentJdbcTemplate;
-import ru.job4j.accident.repository.AccidentMemory;
+import ru.job4j.accident.repository.AccidentHibernate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class AccidentControl {
 
-    private final AccidentJdbcTemplate accidentMemory;
+    private final AccidentHibernate accidentHibernate;
 
     @Autowired
-    public AccidentControl(AccidentJdbcTemplate accidents) {
-        this.accidentMemory = accidents;
+    public AccidentControl(AccidentHibernate accidents) {
+        this.accidentHibernate = accidents;
     }
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("accidentsType", accidentMemory.getAllAccidentType());
-        model.addAttribute("rules", accidentMemory.getAllRules());
+        model.addAttribute("accidentsType", accidentHibernate.getAllAccidentType());
+        model.addAttribute("rules", accidentHibernate.getAllRules());
         return "/create";
     }
 
@@ -41,22 +39,24 @@ public class AccidentControl {
         int accidentTypeId = Integer.parseInt(request.getParameter("accidentsType"));
         String[] rulesId = request.getParameterValues("rules");
 
-        AccidentType accidentType = accidentMemory.getAccidentTypeId(accidentTypeId);
+        AccidentType accidentType = accidentHibernate.getAccidentTypeId(accidentTypeId);
         List<Rule> rules = new ArrayList<>();
-        Arrays.stream(rulesId).forEach(id -> rules.add(accidentMemory.getRulesId(Integer.parseInt(id))));
+        if (rulesId != null) {
+            Arrays.stream(rulesId).forEach(id -> rules.add(accidentHibernate.getRulesId(Integer.parseInt(id))));
+        }
 
         accident.setAccidentType(accidentType);
         accident.setRules(rules);
 
-        accidentMemory.addOrReplace(accident);
+        accidentHibernate.addOrReplace(accident);
         return "redirect:/";
     }
 
     @GetMapping("/update")
     public String edit(@RequestParam int id, Model model) {
-        Accident accident = accidentMemory.getAccidentId(id);
-        model.addAttribute("accidentsType", accidentMemory.getAllAccidentType());
-        model.addAttribute("rules", accidentMemory.getAllRules());
+        Accident accident = accidentHibernate.getAccidentId(id);
+        model.addAttribute("accidentsType", accidentHibernate.getAllAccidentType());
+        model.addAttribute("rules", accidentHibernate.getAllRules());
         model.addAttribute("accident", accident);
         return "/update";
     }

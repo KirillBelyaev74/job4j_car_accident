@@ -39,10 +39,21 @@
                 <td>${accident.name}</td>
                 <td>${accident.text}</td>
                 <td>${accident.address}</td>
-                <td>${accident.accidentType.name}</td>
-                <td><c:forEach items="${accident.rules}" var="rule">
-                    ${rule.name}<br/>
-                </c:forEach>
+<%--                <c:if test="${ empty accident.accidentType }">--%>
+                    <td>${accident.accidentType.name}</td>
+<%--                </c:if>--%>
+<%--                <c:if test="${ not empty accident.accidentType }">--%>
+<%--                    <td></td>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${ empty accident.rules}">--%>
+                <td>
+                    <c:forEach items="${accident.rules}" var="rule">
+                        ${rule.name}<br>
+                    </c:forEach>
+<%--                </c:if>--%>
+<%--                <c:if test="${ not empty accidents.rules}">--%>
+<%--                    <td>--%>
+<%--                </c:if>--%>
                 </td>
                 <td><input type="button" onclick="location.href='<c:url value='/update?id=${accident.id}'/>'"
                            class="btn btn-dark" value="Редактировать"></td>

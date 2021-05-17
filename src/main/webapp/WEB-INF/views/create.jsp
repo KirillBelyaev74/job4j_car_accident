@@ -19,7 +19,7 @@
 <body>
 <div class="container">
     <form action="<c:url value='/save'/>" method='POST'>
-        <div class="form-group">
+        <div class="form-group"><br>
             <label for="name">Имя </label>
             <input type="text" class="form-control" id="name" name="name">
         </div>

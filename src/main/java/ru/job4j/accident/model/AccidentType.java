@@ -1,12 +1,22 @@
 package ru.job4j.accident.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "accident_type")
 public class AccidentType {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
+    @Column(name = "name")
     private String name;
+
+    public AccidentType() {
+    }
 
     public AccidentType(String name) {
         this.name = name;
