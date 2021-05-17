@@ -16,6 +16,27 @@ public class AccidentMemory {
     private final Map<Integer, Rule> rules = new HashMap<>();
     private AtomicInteger index = new AtomicInteger(0);
 
+    public AccidentMemory() {
+        AccidentType one = new AccidentType("Машина и велосипед");
+        one.setId(1);
+        AccidentType two = new AccidentType("Машина и пешеход");
+        two.setId(2);
+        AccidentType three = new AccidentType("Две машины");
+        three.setId(3);
+        accidentsType.put(one.getId(), one);
+        accidentsType.put(two.getId(), two);
+        accidentsType.put(three.getId(), three);
+        Rule first = new Rule("Статья №1");
+        one.setId(1);
+        Rule second = new Rule("Статья №2");
+        two.setId(2);
+        Rule third = new Rule("Статья №3");
+        three.setId(3);
+        rules.put(one.getId(), first);
+        rules.put(two.getId(), second);
+        rules.put(three.getId(), third);
+    }
+
     public Accident addOrReplace(Accident accident) {
         if (accident.getId() == 0) {
             accident.setId(index.incrementAndGet());
@@ -35,15 +56,6 @@ public class AccidentMemory {
     }
 
     public Collection<AccidentType> getAllAccidentType() {
-        AccidentType one = new AccidentType("Машина и велосипед");
-        one.setId(1);
-        AccidentType two = new AccidentType("Машина и пешеход");
-        two.setId(2);
-        AccidentType three = new AccidentType("Две машины");
-        three.setId(3);
-        accidentsType.put(one.getId(), one);
-        accidentsType.put(two.getId(), two);
-        accidentsType.put(three.getId(), three);
         return accidentsType.values();
     }
 
@@ -52,15 +64,6 @@ public class AccidentMemory {
     }
 
     public Collection<Rule> getAllRules() {
-        Rule one = new Rule("Статья №1");
-        one.setId(1);
-        Rule two = new Rule("Статья №2");
-        two.setId(2);
-        Rule three = new Rule("Статья №3");
-        three.setId(3);
-        rules.put(one.getId(), one);
-        rules.put(two.getId(), two);
-        rules.put(three.getId(), three);
         return rules.values();
     }
 
