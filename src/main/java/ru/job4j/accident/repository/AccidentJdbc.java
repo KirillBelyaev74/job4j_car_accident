@@ -10,12 +10,12 @@ import ru.job4j.accident.model.Rule;
 import java.util.*;
 
 //@Repository
-public class AccidentJdbcTemplate {
+public class AccidentJdbc {
 
     private final JdbcTemplate jdbc;
 
     @Autowired
-    public AccidentJdbcTemplate(JdbcTemplate jdbc) {
+    public AccidentJdbc(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
 
@@ -32,7 +32,7 @@ public class AccidentJdbcTemplate {
     }
 
     public List<Accident> getAllAccident() {
-        return jdbc.query("select * from job4j_cars_accident.public.accident",
+        return jdbc.query("select * from job4j_cars_accident.public.accident order by id",
                 (result, row) -> {
                     Accident accident = new Accident(
                             result.getString("name"),
@@ -56,7 +56,7 @@ public class AccidentJdbcTemplate {
     }
 
     public Collection<AccidentType> getAllAccidentType() {
-        return jdbc.query("select * from job4j_cars_accident.public.accident_type",
+        return jdbc.query("select * from job4j_cars_accident.public.accident_type order by id",
                 (result, row) -> {
                     AccidentType accidentType = new AccidentType(result.getString("name"));
                     accidentType.setId(result.getInt("id"));
@@ -74,7 +74,7 @@ public class AccidentJdbcTemplate {
     }
 
     public Collection<Rule> getAllRules() {
-        return jdbc.query("select * from job4j_cars_accident.public.rule",
+        return jdbc.query("select * from job4j_cars_accident.public.rule order by id",
                 (result, i) -> {
                     Rule rule = new Rule(result.getString("name"));
                     rule.setId(result.getInt("id"));

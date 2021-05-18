@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
-@Repository
+//@Repository
 public class AccidentHibernate {
 
     private final Logger logger = Logger.getLogger(AccidentHibernate.class);
@@ -60,8 +60,9 @@ public class AccidentHibernate {
         return action(session -> {
             Query<Accident> query = session.createQuery(
                     "select distinct a from Accident as a "
-                            + " left join fetch a.accidentType "
-                            + " left join fetch a.rules");
+                            + "left join fetch a.accidentType "
+                            + "left join fetch a.rules "
+                            + "order by a.id");
             return query.getResultList();
         });
     }
@@ -70,8 +71,8 @@ public class AccidentHibernate {
         return action(session -> {
             Query<Accident> query = session.createQuery(
                     "select distinct a from Accident as a "
-                            + " left join fetch a.accidentType "
-                            + " left join fetch a.rules "
+                            + "left join fetch a.accidentType "
+                            + "left join fetch a.rules "
                             + "where a.id =: id");
             query.setParameter("id", id);
             return query.uniqueResult();
@@ -79,7 +80,7 @@ public class AccidentHibernate {
     }
 
     public Collection<AccidentType> getAllAccidentType() {
-        return action(session -> session.createQuery("from AccidentType").list());
+        return action(session -> session.createQuery("from AccidentType order by id").list());
     }
 
     public AccidentType getAccidentTypeId(int id) {
@@ -92,7 +93,7 @@ public class AccidentHibernate {
     }
 
     public Collection<Rule> getAllRules() {
-        return action(session -> session.createQuery("from Rule").list());
+        return action(session -> session.createQuery("from Rule order by id").list());
     }
 
     public Rule getRulesId(int id) {
