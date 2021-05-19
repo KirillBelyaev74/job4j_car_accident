@@ -20,6 +20,9 @@
 </head>
 <body>
 <div class="container">
+    <div>
+        <h3>Login as : ${user.username}</h3>
+    </div>
     <br/><input type="button" onclick="location.href='<c:url value='/create'/>'"
                 class="btn btn-dark" value="Добавить"><br/><br/>
     <table class="table">
@@ -31,6 +34,7 @@
             <th scope="col">Тип</th>
             <th scope="col">Роли</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -39,24 +43,16 @@
                 <td>${accident.name}</td>
                 <td>${accident.text}</td>
                 <td>${accident.address}</td>
-<%--                <c:if test="${ empty accident.accidentType }">--%>
-                    <td>${accident.accidentType.name}</td>
-<%--                </c:if>--%>
-<%--                <c:if test="${ not empty accident.accidentType }">--%>
-<%--                    <td></td>--%>
-<%--                </c:if>--%>
-<%--                <c:if test="${ empty accident.rules}">--%>
+                <td>${accident.accidentType.name}</td>
                 <td>
                     <c:forEach items="${accident.rules}" var="rule">
                         ${rule.name}<br>
                     </c:forEach>
-<%--                </c:if>--%>
-<%--                <c:if test="${ not empty accidents.rules}">--%>
-<%--                    <td>--%>
-<%--                </c:if>--%>
                 </td>
                 <td><input type="button" onclick="location.href='<c:url value='/update?id=${accident.id}'/>'"
                            class="btn btn-dark" value="Редактировать"></td>
+                <td><input type="button" onclick="location.href='<c:url value='/delete?id=${accident.id}'/>'"
+                           class="btn btn-dark" value="Удалить"></td>
             </tr>
         </c:forEach>
         </tbody>

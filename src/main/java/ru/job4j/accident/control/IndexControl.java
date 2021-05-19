@@ -1,28 +1,26 @@
 package ru.job4j.accident.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.repository.AccidentRepository;
-
-import java.util.List;
+import ru.job4j.accident.repository.AccidentHibernate;
 
 @Controller
 public class IndexControl {
 
-    private final AccidentRepository accidentRepository;
+    private final AccidentHibernate accidentHibernate;
 
     @Autowired
-    public IndexControl(AccidentRepository accident) {
-        this.accidentRepository = accident;
+    public IndexControl(AccidentHibernate accidentHibernate) {
+        this.accidentHibernate = accidentHibernate;
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Accident> res = accidentRepository.findAll();
-        model.addAttribute("accidents", res);
+        model.addAttribute("accidents", accidentHibernate.getAllAccident());
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "index";
     }
 }

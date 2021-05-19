@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
-//@Repository
+@Repository
 public class AccidentHibernate {
 
     private final Logger logger = Logger.getLogger(AccidentHibernate.class);
@@ -77,6 +77,13 @@ public class AccidentHibernate {
             query.setParameter("id", id);
             return query.uniqueResult();
         });
+    }
+
+    public void deleteAccident(int id) {
+        action(session ->
+                session.createQuery("delete from Accident where id =: id")
+                        .setParameter("id", id).executeUpdate()
+        );
     }
 
     public Collection<AccidentType> getAllAccidentType() {

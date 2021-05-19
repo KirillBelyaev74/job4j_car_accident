@@ -23,8 +23,8 @@ CREATE TABLE accident
 );
 
 create table accident_rule(
-    id_accident int references accident(id),
-    id_rule int references rule(id));
+                              id_accident int references accident(id),
+                              id_rule int references rule(id));
 
 insert into accident_type(name) values ('Машина и велосипед');
 insert into accident_type(name) values ('Машина и пешеход');

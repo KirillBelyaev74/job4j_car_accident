@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentRepository;
-import ru.job4j.accident.repository.AccidentTypeRepository;
-import ru.job4j.accident.repository.RuleRepository;
+import ru.job4j.accident.repository.AccidentHibernate;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -23,17 +21,13 @@ import java.util.stream.Collectors;
 @Controller
 public class AccidentControl {
 
-    private final AccidentRepository accidentRepository;
-    private final AccidentTypeRepository accidentTypeRepository;
-    private final RuleRepository ruleRepository;
+    private final AccidentHibernate accidentHibernate;
     private final Map<Integer, AccidentType> allTypes = new HashMap<>();
     private final Map<Integer, Rule> allRules = new HashMap<>();
 
     @Autowired
-    public AccidentControl(AccidentRepository accidentRepository, AccidentTypeRepository accident, RuleRepository ruleRepository) {
-        this.accidentRepository = accidentRepository;
-        this.accidentTypeRepository = accident;
-        this.ruleRepository = ruleRepository;
+    public AccidentControl(AccidentHibernate accidentHibernate) {
+        this.accidentHibernate = accidentHibernate;
     }
 
     @GetMapping("/create")
@@ -49,7 +43,7 @@ public class AccidentControl {
         int accidentTypeId = Integer.parseInt(request.getParameter("accidentsType"));
         String[] rulesId = request.getParameterValues("rules");
 
-        AccidentType accidentType = accidentTypeRepository.findById(accidentTypeId).get();
+        AccidentType accidentType = accidentHibernate.getAccidentTypeId(accidentTypeId);
         List<Rule> rules = null;
         if (rulesId != null) {
             rules = allRules.entrySet().stream().filter(r -> {
@@ -66,13 +60,13 @@ public class AccidentControl {
         accident.setAccidentType(accidentType);
         accident.setRules(rules);
 
-        accidentRepository.save(accident);
+        accidentHibernate.addOrReplace(accident);
         return "redirect:/";
     }
 
     @GetMapping("/update")
     public String edit(@RequestParam int id, Model model) {
-        Accident accident = accidentRepository.findById(id);
+        Accident accident = accidentHibernate.getAccidentId(id);
         isEmptyTypesAndRules();
         model.addAttribute("accidentsType", allTypes.values());
         model.addAttribute("rules", allRules.values());
@@ -80,10 +74,16 @@ public class AccidentControl {
         return "/update";
     }
 
+    @GetMapping("/delete")
+    public String delete(@RequestParam int id) {
+        accidentHibernate.deleteAccident(id);
+        return "redirect:/";
+    }
+
     private void isEmptyTypesAndRules() {
         if (allTypes.isEmpty() && allRules.isEmpty()) {
-            accidentTypeRepository.findAll().forEach(a -> allTypes.put(a.getId(), a));
-            ruleRepository.findAll().forEach(r -> allRules.put(r.getId(), r));
+            accidentHibernate.getAllAccidentType().forEach(a -> allTypes.put(a.getId(), a));
+            accidentHibernate.getAllRules().forEach(r -> allRules.put(r.getId(), r));
         }
     }
 }
