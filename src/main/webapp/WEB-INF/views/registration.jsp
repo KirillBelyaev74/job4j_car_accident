@@ -6,7 +6,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <title>Авторизация</title>
+    <title>Регистрация</title>
 </head>
 <body>
 <br>
@@ -15,13 +15,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Авторизация</div>
+                <div class="card-header">Регистрация</div>
                 <div class="card-body">
-                    <form name='login' action="<c:url value='/login'/>" method='POST'>
+                    <form name='login' action="<c:url value='/registration'/>" method='POST'>
                         <c:if test="${not empty errorMessage}">
-                        <div style="color:red; font-weight: bold; margin: 30px 0px;">
-                                ${errorMessage}
-                        </div>
+                            <div style="color:red; font-weight: bold; margin: 30px 0px;">
+                                    ${errorMessage}
+                            </div>
                         </c:if>
                         <div class="form-group">
                             <label for="username" class="cols-sm-2 control-label">Имя</label>
@@ -44,12 +44,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" float="right" class="btn btn-dark">
-                                Войти
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-dark">
+                                Зарегестироваться
                             </button>
-                            <input type="button" onclick="location.href='<c:url value='/registration'/>'"
-                                   class="btn btn-dark" value="Зарегистироваться">
+                            <input type="button" onclick="location.href='<c:url value='/login'/>'"
+                                   class="btn btn-dark" value="Войти">
                         </div>
                     </form>
                 </div>

@@ -19,10 +19,14 @@
     <title>Accident</title>
 </head>
 <body>
-<div class="container">
-    <div>
-        <h3>Login as : ${user.username}</h3>
+<div class="navbar navbar-dark bg-dark box-shadow" style="background-color:#000000">
+    <div class="container d-flex justify-content-between">
+        <a class="navbar-brand d-flex align-items-center">
+            <strong>${user.username}</strong>
+        </a>
     </div>
+</div>
+<div class="container">
     <br/><input type="button" onclick="location.href='<c:url value='/create'/>'"
                 class="btn btn-dark" value="Добавить"><br/><br/>
     <table class="table">
