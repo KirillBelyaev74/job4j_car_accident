@@ -19,9 +19,9 @@
     <title>Accident</title>
 </head>
 <body>
-<div class="navbar navbar-dark bg-dark box-shadow" style="background-color:#000000">
+<div class="navbar navbar-dark bg-dark box-shadow">
     <div class="container d-flex justify-content-between">
-        <a class="navbar-brand d-flex align-items-center">
+        <a class="navbar-brand d-flex align-items-center" style="color:#ffffff">
             <strong>${user.username}</strong>
         </a>
     </div>

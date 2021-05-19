@@ -22,14 +22,22 @@ CREATE TABLE accident
     constraint unta unique (name, text, address)
 );
 
-create table accident_rule(
-                              id_accident int references accident(id),
-                              id_rule int references rule(id));
+create table accident_rule
+(
+    id_accident int references accident (id),
+    id_rule     int references rule (id)
+);
 
-insert into accident_type(name) values ('Машина и велосипед');
-insert into accident_type(name) values ('Машина и пешеход');
-insert into accident_type(name) values ('Две машины');
+insert into accident_type(name)
+values ('Машина и велосипед');
+insert into accident_type(name)
+values ('Машина и пешеход');
+insert into accident_type(name)
+values ('Две машины');
 
-insert into rule(name) values ('Статья №1');
-insert into rule(name) values ('Статья №2');
-insert into rule(name) values ('Статья №3');
+insert into rule(name)
+values ('Статья №1');
+insert into rule(name)
+values ('Статья №2');
+insert into rule(name)
+values ('Статья №3');
