@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.hibernate.ActionAccident;
-import ru.job4j.accident.repository.hibernate.ActionAccidentType;
-import ru.job4j.accident.repository.hibernate.ActionRule;
+import ru.job4j.accident.service.AccidentService;
+import ru.job4j.accident.service.AccidentTypeService;
+import ru.job4j.accident.service.RuleService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -23,17 +23,17 @@ import java.util.stream.Collectors;
 @Controller
 public class CrudControl {
 
-    private final ActionAccident actionAccident;
-    private final ActionAccidentType actionAccidentType;
-    private final ActionRule actionRule;
+    private final AccidentService accidentService;
+    private final AccidentTypeService accidentTypeService;
+    private final RuleService ruleService;
     private final Map<Integer, AccidentType> allTypes = new HashMap<>();
     private final Map<Integer, Rule> allRules = new HashMap<>();
 
     @Autowired
-    public CrudControl(ActionAccident accidentAccident, ActionAccidentType actionAccidentType, ActionRule actionRule) {
-        this.actionAccident = accidentAccident;
-        this.actionAccidentType = actionAccidentType;
-        this.actionRule = actionRule;
+    public CrudControl(AccidentService accidentService, AccidentTypeService accidentTypeService, RuleService ruleService) {
+        this.accidentService = accidentService;
+        this.accidentTypeService = accidentTypeService;
+        this.ruleService = ruleService;
     }
 
     @GetMapping("/create")
@@ -49,7 +49,7 @@ public class CrudControl {
         int accidentTypeId = Integer.parseInt(request.getParameter("accidentsType"));
         String[] rulesId = request.getParameterValues("rules");
 
-        AccidentType accidentType = actionAccidentType.findById(accidentTypeId);
+        AccidentType accidentType = accidentTypeService.findById(accidentTypeId);
         List<Rule> rules = null;
         if (rulesId != null) {
             rules = allRules.entrySet().stream().filter(r -> {
@@ -66,13 +66,13 @@ public class CrudControl {
         accident.setAccidentType(accidentType);
         accident.setRules(rules);
 
-        actionAccident.save(accident);
+        accidentService.save(accident);
         return "redirect:/";
     }
 
     @GetMapping("/update")
     public String edit(@RequestParam int id, Model model) {
-        Accident accident = actionAccident.findById(id);
+        Accident accident = accidentService.findById(id);
         isEmptyTypesAndRules();
         model.addAttribute("accidentsType", allTypes.values());
         model.addAttribute("rules", allRules.values());
@@ -82,14 +82,14 @@ public class CrudControl {
 
     @GetMapping("/delete")
     public String delete(@RequestParam int id) {
-        actionAccident.deleteById(id);
+        accidentService.deleteById(id);
         return "redirect:/";
     }
 
     private void isEmptyTypesAndRules() {
         if (allTypes.isEmpty() && allRules.isEmpty()) {
-            actionAccidentType.findAll().forEach(a -> allTypes.put(a.getId(), a));
-            actionRule.findAll().forEach(r -> allRules.put(r.getId(), r));
+            accidentTypeService.findAll().forEach(a -> allTypes.put(a.getId(), a));
+            ruleService.findAll().forEach(r -> allRules.put(r.getId(), r));
         }
     }
 }
