@@ -1,5 +1,3 @@
-create database job4j_cars_accident;
-
 create table accident_type
 (
     id   serial primary key,
@@ -28,16 +26,17 @@ create table accident_rule
     id_rule     int references rule (id)
 );
 
-insert into accident_type(name)
-values ('Машина и велосипед');
-insert into accident_type(name)
-values ('Машина и пешеход');
-insert into accident_type(name)
-values ('Две машины');
+CREATE TABLE authority
+(
+    id        serial primary key,
+    authority VARCHAR(50) NOT NULL unique
+);
 
-insert into rule(name)
-values ('Статья №1');
-insert into rule(name)
-values ('Статья №2');
-insert into rule(name)
-values ('Статья №3');
+CREATE TABLE users
+(
+    id           serial primary key,
+    username     VARCHAR(50)  NOT NULL unique,
+    password     VARCHAR(100) NOT NULL,
+    enabled      boolean default true,
+    authority_id int          not null references authority (id)
+);

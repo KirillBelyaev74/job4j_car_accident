@@ -24,6 +24,11 @@
         <a class="navbar-brand d-flex align-items-center" style="color:#ffffff">
             <strong>${user.username}</strong>
         </a>
+        <c:if test="${not empty user}">
+            <input type="button"
+                   onclick="location.href='<c:url value='/logout'/>'"
+                   class="btn btn-dark" value="Выйти">
+        </c:if>
     </div>
 </div>
 <div class="container">

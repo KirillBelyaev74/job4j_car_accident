@@ -1,17 +1,16 @@
-CREATE TABLE authority
-(
-    id        serial primary key,
-    authority VARCHAR(50) NOT NULL unique
-);
+insert into accident_type(name)
+values ('Машина и велосипед');
+insert into accident_type(name)
+values ('Машина и пешеход');
+insert into accident_type(name)
+values ('Две машины');
 
-CREATE TABLE users
-(
-    id           serial primary key,
-    username     VARCHAR(50)  NOT NULL unique,
-    password     VARCHAR(100) NOT NULL,
-    enabled      boolean default true,
-    authority_id int          not null references authority (id)
-);
+insert into rule(name)
+values ('Статья №1');
+insert into rule(name)
+values ('Статья №2');
+insert into rule(name)
+values ('Статья №3');
 
 insert into authority (authority)
 values ('ROLE_USER');
